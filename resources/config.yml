@@ -1,0 +1,6 @@
+enabled-customs: []
+
+tags:
+  - name: new
+    enabled: true
+    display-layout: "§b§lNEW"
