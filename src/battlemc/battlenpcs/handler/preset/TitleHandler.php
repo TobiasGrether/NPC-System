@@ -23,7 +23,7 @@ class TitleHandler extends NPCEventHandler
 		if ($player instanceof Player) {
 			$player->addTitle($this->getTitle(), $this->getSubtitle(), $this->getFadeIn(), $this->getStay(), $this->getFadeOut());
 		}
-		return true;
+		return false;
 	}
 
 	/**

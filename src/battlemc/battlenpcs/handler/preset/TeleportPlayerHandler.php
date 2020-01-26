@@ -1,40 +1,24 @@
 <?php
-
 namespace battlemc\battlenpcs\handler\preset;
-
 use battlemc\battlenpcs\handler\NPCEventHandler;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 
-class MessageHandler extends NPCEventHandler
+class TeleportPlayerHandler extends NPCEventHandler
 {
-	private $message;
 
-
+	/**
+	 * @var Vector3
+	 */
+	public $location;
 	public function onHit(Entity &$entity, EntityDamageByEntityEvent &$event): bool
 	{
 		$player = $event->getDamager();
-		if ($player instanceof Player) {
-			$player->sendMessage($this->getMessage());
+		if($player instanceof Player){
+			$player->teleport($this->location);
 		}
 		return false;
 	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getMessage()
-	{
-		return $this->message;
-	}
-
-	/**
-	 * @param mixed $message
-	 */
-	public function setMessage($message): void
-	{
-		$this->message = $message;
-	}
-
 }

@@ -1,5 +1,6 @@
-name: LobbyV4
+name: BattleNPC
 main: battlemc\battlenpcs\BattleNPC
 version: "1.0"
 api: ["3.0.0"]
 author: "BattleMC Network"
+load: STARTUP

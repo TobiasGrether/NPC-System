@@ -19,7 +19,7 @@ class CommandExecutionHandler extends NPCEventHandler
 		if ($player instanceof Player) {
 			Server::getInstance()->dispatchCommand($player, $this->getCommand());
 		}
-		return true;
+		return false;
 	}
 
 	/**
