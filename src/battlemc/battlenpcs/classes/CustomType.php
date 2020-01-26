@@ -1,6 +1,8 @@
 <?php
 
 namespace battlemc\battlenpcs\classes;
+use pocketmine\entity\Skin;
+
 class CustomType
 {
 
@@ -64,5 +66,9 @@ class CustomType
 	public function getName(): string
 	{
 		return $this->name;
+	}
+
+	public function toGeometryLessSkin(): ?Skin{
+		return new Skin(uniqid(), $this->getImageData());
 	}
 }
