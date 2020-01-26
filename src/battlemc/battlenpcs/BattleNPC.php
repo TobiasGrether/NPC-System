@@ -22,17 +22,4 @@ class BattleNPC extends PluginBase implements Listener{
 		$loader->load($this->getDataFolder());
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
 	}
-
-	public function onChat(PlayerChatEvent $event){
-		$player = $event->getPlayer();
-		$npc = new NPCBuilder();
-		$entity = $npc->setName($event->getMessage())
-			->setLevel($player->getLevel())
-			->setPosition($player->getLocation())
-			->setType(TypeCache::get("bloody"))
-			->setHandler(new TestEventHandler())
-			->addTag(TagCache::get("new"))
-			->build();
-		$entity->spawnToAll();
-	}
 }
