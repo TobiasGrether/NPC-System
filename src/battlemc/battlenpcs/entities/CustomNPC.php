@@ -9,6 +9,7 @@ use pocketmine\entity\Human;
 use pocketmine\entity\Skin;
 use pocketmine\level\Level;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\Server;
 
 class CustomNPC extends Human
 {
@@ -39,6 +40,12 @@ class CustomNPC extends Human
 	public function __construct(Skin $skin, Level $level, CompoundTag $nbt)
 	{
 		$this->setSkin($skin);
+		$pos = $nbt->getListTag("Pos")->getAllValues();
+		$x = $pos[0];
+		$z = $pos[2];
+		if ($level->isChunkLoaded($x >> 4, $z >> 4) === false) {
+			$level->loadChunk($x >> 4, $z >> 4);
+		}
 		parent::__construct($level, $nbt);
 	}
 
@@ -50,7 +57,6 @@ class CustomNPC extends Human
 			$iterate .= $tag->getDisplayLayout();
 		}
 		$this->setNameTag($iterate);
-
 	}
 
 
