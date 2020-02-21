@@ -4,11 +4,13 @@ namespace battlemc\battlenpcs\classes;
 
 use battlemc\battlenpcs\entities\CustomNPC;
 use battlemc\battlenpcs\handler\NPCEventHandler;
+use pocketmine\entity\Entity;
 use pocketmine\entity\Skin;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 
 use InvalidArgumentException;
+use pocketmine\nbt\tag\CompoundTag;
 
 class NPCBuilder
 {
@@ -83,19 +85,32 @@ class NPCBuilder
 		if ($this->level instanceof Level) {
 			if ($this->position instanceof Vector3) {
 				if ($this->name !== null && $this->name !== "") {
-					$npc = new CustomNPC(new Skin(uniqid(), $this->getType()->getImageData()), $this->level, CustomNPC::createBaseNBT($this->position));
+					$skin = new Skin(uniqid(), $this->getType()->getImageData(), "", $this->getType()->getGeometryName(), $this->getType()->getGeometry());
+					$nbt = CustomNPC::createBaseNBT($this->position);
+					$nbt->setTag(new CompoundTag("Skin"));
+					self::injectSkin($nbt->getCompoundTag("Skin"), $skin);
+					$npc = new CustomNPC($this->level, $nbt);
 					foreach ($this->tags as &$tag) {
 						$npc->addTag($tag);
 					}
 					$npc->setHeader($this->name);
 					$npc->setHandler($this->handler ?? null);
-					// TODO add Geometry
 					$npc->update();
 					return $npc;
 				}
 			}
 		}
 		throw new InvalidArgumentException("It seems at least one of three (Level, Position, Header ) required arguments for your NPC Build is missing");
+	}
+
+	public static function injectSkin(CompoundTag $nbt, Skin $skin)
+	{
+		$nbt->setString("Name", $skin->getSkinId());
+		$nbt->setByteArray("Data", $skin->getSkinData());
+		$nbt->setByteArray("CapeData", $skin->getCapeData());
+		$nbt->setString("GeometryName", $skin->getGeometryName());
+		$nbt->setByteArray("GeometryData", $skin->getGeometryData());
+		return $nbt;
 	}
 
 	/**

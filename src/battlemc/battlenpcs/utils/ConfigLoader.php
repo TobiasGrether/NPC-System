@@ -16,16 +16,19 @@ class ConfigLoader
 		$config = new Config($path . "config.yml", Config::YAML);
 		$customs = $config->get("enabled-customs");
 		foreach ($customs as $custom) {
-			if (file_exists($path . $custom . "_geometry.json")) {
-				$geometry = file_get_contents($path . $custom . "_geometry.json");
-				if (file_exists($path . $custom . "_skin.png")) {
-					$skinData = $this->getFromPathBytes($path . $custom . "_skin.png");
+			$name = $custom["name"];
+			if (file_exists($path . $name . "_geometry.json")) {
+				$geometry = file_get_contents($path . $name . "_geometry.json");
+				if (file_exists($path . $name . "_skin.png")) {
+					$skinData = $this->getFromPathBytes($path . $name . "_skin.png");
 					$type = new CustomType();
 					$type->setGeometry($geometry);
 					$type->setImageData($skinData);
-					$type->setName($custom);
+					$type->setGeometryName($custom["geometry-name"]);
+					$type->setName($name);
 					TypeCache::add($type);
 					var_dump("Added " . $type->getName());
+					var_dump($type->getGeometryName());
 				} else {
 					MainLogger::getLogger()->warning("Could not find Skin File For Custom Entity \"" . $custom . "\"");
 					continue;
@@ -52,9 +55,9 @@ class ConfigLoader
 	{
 		$img = imagecreatefrompng($path);
 		$bytes = '';
-		$l = (int)getimagesize($path)[1];
-		for ($y = 0; $y < $l; $y++) {
-			for ($x = 0; $x < 64; $x++) {
+		$l = getimagesize($path);
+		for ($y = 0; $y < $l[1]; $y++) {
+			for ($x = 0; $x < $l[0]; $x++) {
 				$rgba = imagecolorat($img, $x, $y);
 				$a = ((~((int)($rgba >> 24))) << 1) & 0xff;
 				$r = ($rgba >> 16) & 0xff;

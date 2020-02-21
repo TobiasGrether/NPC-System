@@ -13,12 +13,17 @@ class CustomType
 	/**
 	 * @var string
 	 */
-	private $geometry;
+	private $geometry = "";
 
 	/**
 	 * @var string
 	 */
-	private $imageData;
+	private $imageData = "";
+
+	/**
+	 * @var string
+	 */
+	private $geometryName = "";
 
 	/**
 	 * @return mixed
@@ -70,5 +75,21 @@ class CustomType
 
 	public function toGeometryLessSkin(): ?Skin{
 		return new Skin(uniqid(), $this->getImageData());
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getGeometryName(): string
+	{
+		return $this->geometryName;
+	}
+
+	/**
+	 * @param string $geometryName
+	 */
+	public function setGeometryName(string $geometryName): void
+	{
+		$this->geometryName = $geometryName;
 	}
 }
