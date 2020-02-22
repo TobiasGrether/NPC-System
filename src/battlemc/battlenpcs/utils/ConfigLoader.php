@@ -27,8 +27,6 @@ class ConfigLoader
 					$type->setGeometryName($custom["geometry-name"]);
 					$type->setName($name);
 					TypeCache::add($type);
-					var_dump("Added " . $type->getName());
-					var_dump($type->getGeometryName());
 				} else {
 					MainLogger::getLogger()->warning("Could not find Skin File For Custom Entity \"" . $custom . "\"");
 					continue;
@@ -46,7 +44,6 @@ class ConfigLoader
 				$tag->setName($tagData["name"]);
 				$tag->setDisplayLayout($tagData["display-layout"]);
 				TagCache::add($tag);
-				var_dump("Added Tag " . $tag->getName());
 			}
 		}
 	}
