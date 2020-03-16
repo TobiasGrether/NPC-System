@@ -1,0 +1,8 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/TobiasG-DE/NPC-System
+build-by-default: true
+branches:
+- master
+projects:
+  NPC-System:
+    path: ""
+...
