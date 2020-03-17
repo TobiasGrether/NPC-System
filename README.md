@@ -1,2 +1,2 @@
 # BattleMC-BattleNPCs
-# Please do not use this system as yours. It's mine, I have invested time into it and I just rely on the hope that you grant that a good value
+### Please do not change author / namespaces. I have invested quite some time to create this system, so please leave that as some kind of credits to me for my work
